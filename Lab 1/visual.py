@@ -130,7 +130,7 @@ def minus( data , flag = True ) :
 
 def session( data ) :
     f = True
-    print( SMALL_SPACE + 'Print the list of theaters where sessions begins from 5 o\'clock.\n' )
+    print( SMALL_SPACE + 'Print the list of theaters where sessions begins from %d o\'clock.\n' % actual.TIME )
     print( SMALL_SPACE + '_' * 46 )
     print( SMALL_SPACE + '| Name of the theater  |  Session start time |' )
     print( SMALL_SPACE + '_' * 46 )

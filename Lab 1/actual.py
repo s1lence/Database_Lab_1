@@ -24,7 +24,7 @@ class Theater( object ) :
 
     def print( self , beg = '' , ends = '\n' ) :
         print( beg + '%20s' % (self.name) , end = ends )
-
+        # print(beg+'%17s %2d' %(self.name,self.get_id()),end=ends)
     def get_id( self ) :
         return self.id
 
@@ -33,18 +33,20 @@ def initialise( filename ) :
     global last_id_used
     try :
         with open( filename , 'rb' ) as f :
+            last_id_used = pickle.load(f)
             theaters = pickle.load( f )
             sessions = pickle.load( f )
         f.close( )
-        theaters.sort( key = lambda x : x.get_id( ) )
-        last_id_used = theaters[ -1 ].get_id( )
         return [ theaters , sessions ]
     except :
+        last_id_used = 0
         return [ [ ] , { } ]
 
 
 def go_save( *values ) :
+    global last_id_used
     with open( values[ 1 ] , 'wb' ) as f :
+        pickle.dump(last_id_used,f)
         pickle.dump( values[ 0 ][ 0 ] , f , pickle.HIGHEST_PROTOCOL )
         pickle.dump( values[ 0 ][ 1 ] , f , pickle.HIGHEST_PROTOCOL )
     f.close( )
@@ -58,10 +60,8 @@ def addition( *values ) :
 
 
 def subtraction( *values ) :
-    global last_id_used
     if values[ 2 ] is not None :
         values[ 0 ][ 1 ][ values[ 0 ][ 0 ][ values[ 1 ] ].get_id( ) ] = values[ 2 ]
     else :
-        last_id_used -= 1
         del values[ 0 ][ 1 ][ values[ 0 ][ 0 ][ values[ 1 ] ].get_id( ) ]
         values[ 0 ][ 0 ].remove( values[ 0 ][ 0 ][ values[ 1 ] ] )
