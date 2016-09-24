@@ -3,7 +3,7 @@ import actual
 
 SMALL_SPACE = ' ' * 10
 BIG_SPACE = ' ' * 20
-clear = lambda : print( (' \n') )
+clear = lambda : print( ' \n')
 
 
 def menu( data ) :
